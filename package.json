@@ -1,0 +1,24 @@
+{
+  "name": "ts-playground",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@9.1.1",
+  "engines": {
+    "node": ">=20 <21"
+  },
+  "devDependencies": {
+    "@virtual-live-lab/eslint-config": "^2.0.1",
+    "@virtual-live-lab/prettier-config": "^2.0.2",
+    "@virtual-live-lab/tsconfig": "^2.0.1",
+    "eslint": "^9.2.0",
+    "prettier": "^3.2.5",
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.9.0"
+  }
+}
