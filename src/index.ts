@@ -1,21 +1,37 @@
-import { createJsonTranslator, createLanguageModel } from "typechat";
-import { processRequests } from "typechat/interactive";
-import { createZodJsonValidator } from "typechat/zod";
+import type { UserContext } from "./userIO";
 
+import { AI } from "./ai";
 import { getEnv } from "./env";
-import { SentimentSchema } from "./schema";
+import { getPrompt } from "./prompt";
+import { menuValidator } from "./schema";
 
 const env = getEnv();
-const model = createLanguageModel(env);
-const validator = createZodJsonValidator(SentimentSchema, "SentimentResponse");
-const translator = createJsonTranslator(model, validator);
+
+const USER_CONTEXT: UserContext = {
+  allergies: ["牛乳", "えび"],
+};
 
 // Process requests interactively or from the input file specified on the command line
-void processRequests("😀> ", process.argv[2], async (request) => {
-  const response = await translator.translate(request);
+async function generateMenu() {
+  const ai = new AI({
+    apiKey: env.OPENAI_API_KEY,
+    model: "gpt-4o",
+  });
+
+  const prompt = getPrompt(USER_CONTEXT);
+  const response = await ai.useTypeChat({
+    request: prompt,
+    validator: menuValidator,
+  });
   if (!response.success) {
     console.log(response.message);
     return;
   }
-  console.log(`The sentiment is ${response.data.sentiment}`);
-});
+  console.dir(response.data, { depth: null });
+}
+
+const main = async () => {
+  await generateMenu();
+};
+
+void main();

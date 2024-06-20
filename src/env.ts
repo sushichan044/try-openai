@@ -2,7 +2,6 @@ import { z } from "zod";
 
 const EnvSchema = z.object({
   OPENAI_API_KEY: z.string(),
-  OPENAI_MODEL: z.string().default("gpt-4o-2024-05-13"),
 });
 
 const getEnv = () => {

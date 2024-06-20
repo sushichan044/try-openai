@@ -9,23 +9,23 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@9.1.1",
+  "packageManager": "pnpm@9.4.0",
   "engines": {
     "node": ">=20 <21"
   },
   "devDependencies": {
-    "@types/node": "^20.14.2",
-    "@virtual-live-lab/eslint-config": "^2.0.1",
+    "@types/node": "^20.14.6",
+    "@virtual-live-lab/eslint-config": "^2.0.3",
     "@virtual-live-lab/prettier-config": "^2.0.2",
-    "@virtual-live-lab/tsconfig": "^2.0.1",
-    "eslint": "^9.2.0",
-    "prettier": "^3.2.5",
+    "@virtual-live-lab/tsconfig": "^2.1.1",
+    "eslint": "8.57.0",
+    "prettier": "^3.3.2",
     "typescript": "^5.4.5",
-    "typescript-eslint": "^7.9.0"
+    "typescript-eslint": "^7.13.1"
   },
   "dependencies": {
-    "openai": "^4.51.0",
-    "tsx": "^4.15.4",
+    "openai": "^4.52.0",
+    "tsx": "^4.15.6",
     "typechat": "^0.1.0",
     "zod": "^3.23.8"
   }
