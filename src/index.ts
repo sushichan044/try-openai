@@ -1,9 +1,9 @@
 import type { UserContext } from "./userIO";
 
 import { AI } from "./ai";
-import { getEnv } from "./env";
 import { getPrompt } from "./prompt";
 import { menuValidator } from "./schema";
+import { getEnv } from "./userIO";
 
 const env = getEnv();
 
