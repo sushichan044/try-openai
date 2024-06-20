@@ -1,8 +1,9 @@
 import type { TypeChatJsonValidator, TypeChatLanguageModel } from "typechat";
 
+import OpenAI from "openai";
 import { createJsonTranslator, createLanguageModel } from "typechat";
 
-import type { AIContext } from "./type";
+import type { AIContext, AIEnv } from "./type";
 
 import { aiCtxToEnv } from "./type";
 
@@ -12,23 +13,28 @@ type UseTypeChatInput<T extends object> = {
 };
 
 class AI {
-  private readonly ctx: AIContext;
-  private readonly tcModel: TypeChatLanguageModel;
+  private readonly AIEnv: AIEnv;
+  private readonly OpenAI: OpenAI;
+  private readonly TypeChatModel: TypeChatLanguageModel;
 
   constructor(ctx: AIContext) {
-    this.ctx = ctx;
-    this.tcModel = createLanguageModel(this.getLLMOptions());
+    this.AIEnv = aiCtxToEnv(ctx);
+    this.OpenAI = new OpenAI({ apiKey: this.AIEnv.OPENAI_API_KEY });
+    this.TypeChatModel = createLanguageModel(this.AIEnv);
   }
 
-  private getLLMOptions() {
-    return aiCtxToEnv(this.ctx);
+  public async useOpenAIChatCompletions(prompt: string) {
+    return await this.OpenAI.chat.completions.create({
+      messages: [{ content: prompt, role: "user" }],
+      model: this.AIEnv.OPENAI_MODEL,
+    });
   }
 
   public async useTypeChat<T extends object>({
     request,
     validator,
   }: UseTypeChatInput<T>) {
-    const translator = createJsonTranslator(this.tcModel, validator);
+    const translator = createJsonTranslator(this.TypeChatModel, validator);
     return await translator.translate(request);
   }
 }

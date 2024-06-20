@@ -21,6 +21,7 @@ const aiEnv = z.object({
     .enum(OPENAI_MODELS)
     .transform((model) => OPENAI_ACTUAL_MODEL_NAMES[model]),
 });
+type AIEnv = z.infer<typeof aiEnv>;
 
 const aiCtxToEnv = (ctx: AIContext) => {
   const env = aiEnv.safeParse({
@@ -34,4 +35,4 @@ const aiCtxToEnv = (ctx: AIContext) => {
 };
 
 export { aiCtxToEnv };
-export type { AIContext };
+export type { AIContext, AIEnv };
