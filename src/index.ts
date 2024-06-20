@@ -13,10 +13,7 @@ const USER_CONTEXT: UserContext = {
 
 // Process requests interactively or from the input file specified on the command line
 async function generateMenu() {
-  const ai = new AI({
-    apiKey: env.OPENAI_API_KEY,
-    model: "gpt-4o",
-  });
+  const ai = new AI({ apiKey: env.OPENAI_API_KEY, model: "gpt-4o" });
 
   const prompt = getPrompt(USER_CONTEXT);
   const response = await ai.useTypeChat({
