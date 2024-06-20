@@ -17,18 +17,21 @@ async function generateMenu() {
 
   const prompt = getPrompt(USER_CONTEXT);
   const response = await ai.useTypeChat({
-    request: prompt,
+    prompt: { request: prompt },
     validator: menuValidator,
   });
-  if (!response.success) {
-    console.log(response.message);
-    return;
-  }
-  console.dir(response.data, { depth: null });
+
+  return response;
 }
 
 const main = async () => {
-  await generateMenu();
+  const res = await generateMenu();
+  if (res.isErr()) {
+    console.error(res.error);
+    return;
+  }
+  console.dir(res.value, { depth: null });
+  return;
 };
 
 void main();
