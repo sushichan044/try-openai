@@ -4,7 +4,7 @@ import { createJsonTranslator, createLanguageModel } from "typechat";
 
 import type { AIContext } from "./type";
 
-import { aiEnv } from "./type";
+import { aiCtxToEnv } from "./type";
 
 type UseTypeChatInput<T extends object> = {
   request: string;
@@ -21,14 +21,7 @@ class AI {
   }
 
   private getLLMOptions() {
-    const env = aiEnv.safeParse({
-      OPENAI_API_KEY: this.ctx.apiKey,
-      OPENAI_MODEL: this.ctx.model,
-    });
-    if (!env.success) {
-      throw new Error(env.error.toString());
-    }
-    return env.data;
+    return aiCtxToEnv(this.ctx);
   }
 
   public async useTypeChat<T extends object>({
